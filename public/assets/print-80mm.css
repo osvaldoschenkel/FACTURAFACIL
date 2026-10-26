@@ -1,0 +1,4 @@
+/* print.js adjusts the roll length to its content before printing. */
+@page{size:80mm 297mm;margin:0}
+.invoice-sheet{width:80mm;max-width:80mm}
+@media print{html,body{width:80mm}}

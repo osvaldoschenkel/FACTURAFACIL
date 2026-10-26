@@ -89,6 +89,12 @@ Documentación oficial usada para la integración:
 
 Si cambia la configuración fiscal del emisor, generar nuevos borradores con esos datos antes de emitir. Se pueden archivar productos y clientes conservando los datos históricos de facturas. Solo pueden eliminarse borradores sin numeración fiscal.
 
+## Impresión
+
+En **Configuración → Facturación → Formato de impresión**, elegir **A4**, **Ticket 80 mm** o **Ticket 50 mm** como formato predeterminado. También se puede cambiar el formato al abrir un comprobante para imprimirlo; esa elección no modifica sus datos fiscales.
+
+Para tickets, configurar la impresora con el mismo ancho de papel seleccionado, escala al **100%** y sin encabezados ni pies de página del navegador. Verificar la vista previa antes de imprimir.
+
 ## Cortes de conexión y conciliación
 
 La aplicación guarda el número y los datos del envío **antes** de contactar a ARCA. Un corte puede dejar un comprobante en **Resultado incierto** o **Procesando** aunque ARCA lo haya autorizado. No se avanza la misma serie mientras exista ese pendiente.

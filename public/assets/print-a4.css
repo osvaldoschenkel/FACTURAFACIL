@@ -1,0 +1,3 @@
+@page{size:A4 portrait;margin:12mm}
+.invoice-sheet{width:210mm;max-width:calc(100% - 32px);padding:12mm}
+@media print{.invoice-sheet{width:186mm}}

@@ -118,7 +118,42 @@ try:
     status, printed, _ = request(f"/invoices/{printed_id}/print")
     check(status == 200 and "SIN VALIDEZ FISCAL" in printed and 'id="fiscal-qr"' in printed
           and "12345678901234" in printed, "authorized test fixture prints with QR and homologation label")
-    for asset in ["print.js", "print.css", "qrcode.js"]:
+    for print_format in ["a4", "80mm", "50mm"]:
+        status, printed, headers = request(f"/invoices/{printed_id}/print?format={print_format}")
+        check(status == 200 and f'data-print-format="{print_format}"' in printed,
+              "explicit print format is applied: " + print_format)
+        check(f"/assets/print-{print_format}.css" in printed and 'id="print-format"' in printed,
+              "selected print stylesheet and format control are present: " + print_format)
+        check("12345678901234" in printed and 'id="fiscal-qr"' in printed
+              and "10,5%" in printed and "21%" in printed and "Cliente &lt;script&gt;prueba&lt;/script&gt;" in printed,
+              "every format preserves CAE, QR, VAT and escaped recipient: " + print_format)
+    for bad_format in ["90mm", "80mm;size:A3", '"><script>window.print()</script>']:
+        encoded = urllib.parse.quote(bad_format, safe="")
+        status, printed, _ = request(f"/invoices/{printed_id}/print?format={encoded}")
+        check(status == 422 and '<script>window.print()</script>' not in printed,
+              "unrecognized or injected print format is rejected")
+    status, _, _ = request(f"/invoices/{printed_id}/print?format%5B%5D=80mm")
+    check(status == 422, "array print format is rejected without a server error")
+    for print_format in ["80mm", "50mm", "a4"]:
+        status, result, _ = request("/api/settings", "POST", {"print_format": print_format}, csrf)
+        check(status == 200 and result["settings"]["print_format"] == print_format,
+              "print format preference is saved: " + print_format)
+        status, printed, _ = request(f"/invoices/{printed_id}/print")
+        check(status == 200 and f'data-print-format="{print_format}"' in printed,
+              "printing without query uses saved preference: " + print_format)
+        if print_format == "80mm":
+            status, printed, _ = request(f"/invoices/{printed_id}/print?format=a4")
+            check(status == 200 and 'data-print-format="a4"' in printed,
+                  "explicit print format overrides the saved preference")
+            status, result, _ = request("/api/settings")
+            check(status == 200 and result["settings"]["print_format"] == "80mm",
+                  "one-time print format does not modify saved preference")
+    status, _, _ = request("/api/settings", "POST", {"print_format": "90mm"}, csrf)
+    check(status == 422, "invalid saved print format is rejected")
+    status, result, _ = request("/api/settings")
+    check(status == 200 and result["settings"]["print_format"] == "a4",
+          "invalid setting does not overwrite the saved format")
+    for asset in ["print.js", "print.css", "print-a4.css", "print-80mm.css", "print-50mm.css", "qrcode.js"]:
         status, _, _ = request("/assets/" + asset)
         check(status == 200, "print asset served")
     status, _, _ = request(f'/api/invoices/{invoice["id"]}', "DELETE", csrf=csrf)

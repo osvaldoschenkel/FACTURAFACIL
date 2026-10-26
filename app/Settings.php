@@ -25,6 +25,7 @@ final class Settings
         'default_voucher_type' => 6,
         'default_vat_rate' => '21',
         'prices_include_vat' => true,
+        'print_format' => 'a4',
     ];
 
     public function __construct(private PDO $db, private string $storagePath)
@@ -124,6 +125,9 @@ final class Settings
             throw new RuntimeException('La opción de precios con IVA debe ser verdadera o falsa.');
         }
         $values['prices_include_vat'] = $boolean;
+        if (!in_array($values['print_format'], ['a4', '80mm', '50mm'], true)) {
+            throw new RuntimeException('El formato de impresión debe ser A4, ticket de 80 mm o ticket de 50 mm.');
+        }
         if ($values['email'] !== '' && !filter_var($values['email'], FILTER_VALIDATE_EMAIL)) {
             throw new RuntimeException('El correo del emisor no es válido.');
         }

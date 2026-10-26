@@ -75,6 +75,8 @@ try {
     if (preg_match('~^/invoices/(\d+)/print$~', $path, $match) && $method === 'GET') {
         $invoice = $invoices->find((int)$match[1]);
         if ($invoice['status'] !== 'authorized') { throw new RuntimeException('Solo se pueden imprimir comprobantes autorizados.'); }
+        $printFormat = $_GET['format'] ?? ($settings->get()['print_format'] ?? 'a4');
+        if (!is_string($printFormat) || !in_array($printFormat, ['a4','80mm','50mm'], true)) { throw new RuntimeException('Elegí un formato válido: A4, ticket de 80 mm o ticket de 50 mm.'); }
         require dirname(__DIR__) . '/app/views/print.php';
         exit;
     }

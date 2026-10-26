@@ -1,1 +1,86 @@
-*{box-sizing:border-box}body{margin:0;background:#eef1f5;color:#172235;font:13px Arial,sans-serif}.print-tools{display:flex;gap:24px;align-items:center;max-width:900px;margin:22px auto}.print-tools a{color:#2456ca}.print-tools button{border:0;border-radius:7px;background:#2456ca;color:white;padding:12px 20px;cursor:pointer}.invoice-sheet{background:#fff;max-width:900px;margin:20px auto;padding:30px;border:1px solid #d3d8e0}.original{text-align:center;font-weight:700;border-bottom:1px solid #333;padding-bottom:12px}.invoice-header{display:grid;grid-template-columns:1fr 85px 1fr;gap:22px;border-bottom:2px solid #333;padding:15px 0}.invoice-header h1{font-size:25px;margin:0 0 20px}.invoice-header h2{font-size:26px;margin:0 0 18px}.invoice-header p{line-height:1.8}.voucher-letter{text-align:center;border:2px solid #333;height:85px}.voucher-letter strong{display:block;font-size:44px}.voucher-letter small{font-size:10px}.customer{border-bottom:1px solid #777;padding:20px 0}.customer h3{margin:0}table{width:100%;border-collapse:collapse;margin:25px 0}th{background:#f2f3f5;border-bottom:1px solid #aaa;text-align:left;font-size:11px}td,th{padding:12px 8px}td{border-bottom:1px solid #ddd}td:not(:first-child),th:not(:first-child){text-align:right}small{color:#555}.totals{margin:30px 0 30px auto;max-width:340px}.totals p{display:flex;justify-content:space-between}.grand-total{border-top:2px solid #333;padding-top:15px;font-size:21px}footer{border-top:1px solid #999;padding-top:20px;display:flex;gap:25px;align-items:center}#fiscal-qr{width:145px;height:145px}#fiscal-qr svg{width:100%;height:100%}footer a{font-size:11px;color:#234ca0}.test-banner{padding:15px;background:#fff0ce;border:1px solid #b57c00;text-align:center;font-weight:700}@media(max-width:650px){.invoice-sheet{padding:12px}.invoice-header{grid-template-columns:1fr 60px 1fr;gap:10px}.invoice-header h1,.invoice-header h2{font-size:18px}td,th{padding:8px 3px;font-size:10px}}@media print{@page{size:A4;margin:12mm}body{background:white}.print-tools{display:none}.invoice-sheet{border:0;margin:0;padding:0;max-width:none}tr{break-inside:avoid}footer{break-inside:avoid}a{color:#111;text-decoration:none}.test-banner{border:2px solid #333}}
+*{box-sizing:border-box}
+body{margin:0;background:#eef1f5;color:#172235;font:13px Arial,sans-serif}
+.print-tools{display:flex;flex-wrap:wrap;gap:18px;align-items:center;max-width:900px;margin:22px auto;padding:0 16px}
+.print-tools a{color:#2456ca}
+.print-tools button{border:0;border-radius:7px;background:#2456ca;color:#fff;padding:12px 20px;cursor:pointer;font:inherit}
+.format-form{display:flex;gap:12px;align-items:center;margin-left:auto}
+.format-form label{font-weight:600}
+.format-form>div{display:flex;gap:8px}
+.format-form select{font:inherit;background:#fff;border:1px solid #aab5c5;border-radius:6px;padding:10px;min-width:120px}
+.print-tools .format-apply{background:#fff;color:#2456ca;border:1px solid #ccd5e4}
+.print-help{flex-basis:100%;margin:0;color:#566176;font-size:12px;line-height:1.5}
+.invoice-sheet{background:#fff;margin:20px auto;border:1px solid #d3d8e0;overflow-wrap:anywhere}
+.original{text-align:center;font-weight:700;border-bottom:1px solid #333;padding-bottom:12px;margin-top:0}
+.invoice-header{display:grid;grid-template-columns:minmax(0,1fr) 85px minmax(0,1fr);gap:22px;border-bottom:2px solid #333;padding:15px 0}
+.invoice-header h1{font-size:25px;margin:0 0 20px}
+.invoice-header h2{font-size:26px;margin:0 0 18px}
+.invoice-header p{line-height:1.8}
+.voucher-letter{text-align:center;border:2px solid #333;height:85px}
+.voucher-letter strong{display:block;font-size:44px}
+.voucher-letter small{font-size:10px}
+.customer{border-bottom:1px solid #777;padding:20px 0}
+.customer h3{margin:0}
+table{width:100%;border-collapse:collapse;margin:25px 0;table-layout:fixed}
+th{background:#f2f3f5;border-bottom:1px solid #aaa;text-align:left;font-size:11px}
+td,th{padding:12px 8px;vertical-align:top}
+td{border-bottom:1px solid #ddd}
+td:not(:first-child),th:not(:first-child){text-align:right}
+td:first-child,th:first-child{width:34%}
+small{color:#555}
+.ticket-items{display:none}
+.totals{margin:30px 0 30px auto;max-width:340px}
+.totals p{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.totals b{text-align:right;min-width:0}
+.grand-total{border-top:2px solid #333;padding-top:15px;font-size:21px}
+footer{border-top:1px solid #999;padding-top:20px;display:flex;gap:25px;align-items:center}
+footer>div{min-width:0}
+#fiscal-qr{width:145px;height:145px;flex-shrink:0}
+#fiscal-qr svg{display:block;width:100%;height:100%}
+footer a{font-size:11px;color:#234ca0}
+.test-banner{padding:15px;background:#fff0ce;border:1px solid #b57c00;text-align:center;font-weight:700;margin-bottom:12px}
+/* Receipts have a separate product layout so invoice columns remain legible. */
+body:not(.print-a4) .invoice-sheet{padding:3mm;color:#000;font-size:12px;line-height:1.45}
+body:not(.print-a4) .original{font-size:10px;padding-bottom:7px;margin-bottom:10px}
+body:not(.print-a4) .invoice-header{display:flex;flex-direction:column;gap:10px;text-align:center;padding:0 0 12px;border-bottom:1px dashed #000}
+body:not(.print-a4) .invoice-header h1{font-size:18px;margin:0 0 7px;line-height:1.25}
+body:not(.print-a4) .invoice-header h2{font-size:17px;margin:0 0 7px}
+body:not(.print-a4) .invoice-header p{line-height:1.5;margin:5px 0}
+body:not(.print-a4) .voucher-letter{align-self:center;width:50px;height:60px;border:1px solid #000}
+body:not(.print-a4) .voucher-letter strong{font-size:32px;line-height:1.25}
+body:not(.print-a4) .voucher-letter small{font-size:9px}
+body:not(.print-a4) .customer{padding:12px 0;border-bottom:1px dashed #000}
+body:not(.print-a4) .customer h3{font-size:13px}
+body:not(.print-a4) .customer p{margin:6px 0}
+body:not(.print-a4) .a4-items{display:none}
+body:not(.print-a4) .ticket-items{display:block}
+.ticket-items h3{font-size:12px;margin:12px 0 0}
+.ticket-items ol{margin:0;padding:0;list-style:none}
+.ticket-item{padding:10px 0;border-bottom:1px dashed #777;break-inside:avoid}
+.ticket-item h4{font-size:13px;margin:0 0 4px;line-height:1.35}
+.item-code{font-size:10px;margin:0 0 5px;color:#333}
+.item-details{margin:0}
+.item-details>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:7px;margin-top:3px}
+.item-details dt,.item-details dd{margin:0}
+.item-details dd{text-align:right}
+.item-subtotal{font-weight:700}
+body:not(.print-a4) .totals{margin:12px 0 16px;max-width:none}
+body:not(.print-a4) .totals p{gap:8px;margin:8px 0}
+body:not(.print-a4) .grand-total{font-size:17px;padding-top:10px;border-top:1px solid #000}
+body:not(.print-a4) footer{flex-direction:column;gap:8px;padding-top:12px;border-top:1px dashed #000;text-align:center}
+body:not(.print-a4) footer h3{font-size:13px;margin:4px 0}
+body:not(.print-a4) footer p{margin:6px 0;line-height:1.6}
+body:not(.print-a4) #fiscal-qr{width:44mm;height:44mm;max-width:100%}
+body:not(.print-a4) footer a{font-size:10px}
+body:not(.print-a4) .test-banner{padding:8px 4px;font-size:10px;border-color:#000;background:#fff}
+.print-50mm .invoice-sheet{font-size:11px!important}
+.print-50mm .invoice-header h1{font-size:16px!important}
+.print-50mm .item-details>div{display:block;margin-top:5px}
+.print-50mm .item-details dt{font-size:10px;color:#333}
+.print-50mm .item-details dd{text-align:right;font-size:11px}
+.print-50mm .item-subtotal dd{font-size:12px}
+.print-50mm .totals p{flex-wrap:wrap;row-gap:2px}
+.print-50mm .totals b{margin-left:auto}
+.print-50mm .grand-total{font-size:15px!important}
+.print-50mm #fiscal-qr{width:42mm!important;height:42mm!important}
+@media(max-width:650px){.print-tools{gap:12px}.format-form{margin-left:0;flex-wrap:wrap}.print-tools>button{margin-left:auto}.print-a4 .invoice-sheet{max-width:calc(100% - 20px);padding:12px}.print-a4 .invoice-header{grid-template-columns:minmax(0,1fr) 55px minmax(0,1fr);gap:10px}.print-a4 .invoice-header h1,.print-a4 .invoice-header h2{font-size:18px}.print-a4 td,.print-a4 th{padding:8px 3px;font-size:10px}.print-a4 footer{gap:12px}.print-a4 #fiscal-qr{width:105px;height:105px}}
+@media print{html,body{margin:0!important;padding:0!important;background:#fff;color:#000}.print-tools{display:none!important}.invoice-sheet{border:0;margin:0!important;max-width:none!important}tr{break-inside:avoid}thead{display:table-header-group}footer{break-inside:avoid}a{color:#000;text-decoration:none}.test-banner{border:2px solid #000}.print-a4 .invoice-header{grid-template-columns:minmax(0,1fr) 85px minmax(0,1fr);gap:22px}.print-a4 .invoice-header h1{font-size:25px}.print-a4 .invoice-header h2{font-size:26px}.print-a4 td,.print-a4 th{padding:12px 8px;font-size:11px}.print-a4 footer{gap:25px}.print-a4 #fiscal-qr{width:145px;height:145px}.print-a4 .invoice-sheet{padding:0!important}body:not(.print-a4) .invoice-sheet{padding:3mm}}
