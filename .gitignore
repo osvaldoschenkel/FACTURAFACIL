@@ -1,0 +1,10 @@
+/private/
+/vendor/
+*.sqlite
+*.sqlite-*
+*.pem
+*.key
+*.crt
+*.p12
+.env
+.DS_Store

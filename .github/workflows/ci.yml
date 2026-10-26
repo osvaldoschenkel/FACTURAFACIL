@@ -1,0 +1,32 @@
+name: Verificación PHP
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: pdo_sqlite, soap, openssl, simplexml, mbstring, ctype
+          coverage: none
+      - name: Sintaxis
+        run: find app public bin tests -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Pruebas sin emisión fiscal real
+        run: |
+          for test_file in tests/*_test.php; do
+            php "$test_file"
+          done
+      - name: Flujo HTTP local
+        run: python3 tests/http_smoke.py

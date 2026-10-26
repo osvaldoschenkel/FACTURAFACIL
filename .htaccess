@@ -1,0 +1,3 @@
+# The web server document root must be FACTURAFACIL/public.
+# Deny serving the repository root, private database, or application sources.
+Require all denied

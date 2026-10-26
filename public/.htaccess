@@ -1,0 +1,13 @@
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+Require all granted
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^(?:\.|router\.php) - [F,END]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^assets/ - [END]
+RewriteRule ^ index.php [END]
+</IfModule>
+<FilesMatch "^\.">
+Require all denied
+</FilesMatch>
